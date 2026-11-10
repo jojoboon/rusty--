@@ -5,7 +5,7 @@ use crate::{RustyAutoClickerApp, types::InteractionMode};
 impl RustyAutoClickerApp {
     pub fn show_hotkeys_window(&mut self, ctx: &Context) {
         let idle = self.is_idle();
-        egui::Window::new("Hotkeys")
+        egui::Window::new("快捷键设置")
             .fixed_size(egui::vec2(260f32, 150f32))
             .anchor(egui::Align2::CENTER_CENTER, [0f32, 0f32])
             .collapsible(false)
@@ -15,7 +15,7 @@ impl RustyAutoClickerApp {
                     if ui
                         .add_sized(
                             [120.0f32, 32.0f32],
-                            egui::widgets::Button::new("Start/Stop"),
+                            egui::widgets::Button::new("开始 / 停止"),
                         )
                         .clicked()
                     {
@@ -30,7 +30,7 @@ impl RustyAutoClickerApp {
                         let text: String = if let Some(pressed_keys) = self.key_autoclick {
                             format!("{:}", pressed_keys)
                         } else {
-                            "PRESS ANY KEY".to_string()
+                            "请按下任意键".to_string()
                         };
                         ui.add_sized([130.0f32, 32.0f32], egui::widgets::Button::new(text));
                     });
@@ -39,9 +39,9 @@ impl RustyAutoClickerApp {
                     if ui
                         .add_sized(
                             [120.0f32, 32.0f32],
-                            egui::widgets::Button::new("Confirm Coords"),
+                            egui::widgets::Button::new("确认坐标"),
                         )
-                        .on_hover_text("Note: L Click cannot be changed")
+                        .on_hover_text("提示: 鼠标左键固定不可更改")
                         .clicked()
                     {
                         // Allow keybind only if app is not busy
@@ -53,9 +53,9 @@ impl RustyAutoClickerApp {
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
                         ui.disable();
                         let text: String = if let Some(pressed_keys) = self.key_set_coord {
-                            format!("{:} / L Click", pressed_keys)
+                            format!("{:} / 鼠标左键", pressed_keys)
                         } else {
-                            "PRESS ANY KEY".to_string()
+                            "请按下任意键".to_string()
                         };
                         ui.add_sized([130.0f32, 32.0f32], egui::widgets::Button::new(text));
                     });
@@ -64,7 +64,7 @@ impl RustyAutoClickerApp {
                     if ui
                         .add_sized(
                             [120.0f32, 32.0f32],
-                            egui::widgets::Button::new("Click & Hold"),
+                            egui::widgets::Button::new("长按模式"),
                         )
                         .clicked()
                     {
@@ -79,7 +79,7 @@ impl RustyAutoClickerApp {
                         let text: String = if let Some(pressed_keys) = self.key_hold {
                             format!("{:}", pressed_keys)
                         } else {
-                            "PRESS ANY KEY".to_string()
+                            "请按下任意键".to_string()
                         };
                         ui.add_sized([130.0f32, 32.0f32], egui::widgets::Button::new(text));
                     });

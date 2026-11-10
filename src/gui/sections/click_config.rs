@@ -8,10 +8,10 @@ use crate::{
 impl RustyAutoClickerApp {
     pub fn show_click_interval(&mut self, ui: &mut egui::Ui) {
         ui.horizontal_wrapped(|ui| {
-            ui.label("Click Interval");
+            ui.label("点击间隔");
 
             ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
-                ui.label("ms");
+                ui.label("毫秒");
                 self.disable_if_busy(ui);
                 ui.add(
                     egui::TextEdit::singleline(&mut self.ms_str)
@@ -19,21 +19,21 @@ impl RustyAutoClickerApp {
                         .hint_text("0"),
                 );
 
-                ui.label("sec");
+                ui.label("秒");
                 ui.add(
                     egui::TextEdit::singleline(&mut self.sec_str)
                         .desired_width(40.0f32)
                         .hint_text("0"),
                 );
 
-                ui.label("min");
+                ui.label("分");
                 ui.add(
                     egui::TextEdit::singleline(&mut self.min_str)
                         .desired_width(40.0f32)
                         .hint_text("0"),
                 );
 
-                ui.label("hr");
+                ui.label("时");
                 ui.add(
                     egui::TextEdit::singleline(&mut self.hr_str)
                         .desired_width(40.0f32)
@@ -45,18 +45,18 @@ impl RustyAutoClickerApp {
 
     pub fn show_click_type(&mut self, ui: &mut egui::Ui) {
         ui.horizontal_wrapped(|ui| {
-            ui.label("Click Type");
+            ui.label("点击模式");
             ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
                 self.disable_if_busy(ui);
-                ui.selectable_value(&mut self.click_type, ClickType::Single, "Single");
-                ui.selectable_value(&mut self.click_type, ClickType::Double, "Double");
+                ui.selectable_value(&mut self.click_type, ClickType::Single, "单击");
+                ui.selectable_value(&mut self.click_type, ClickType::Double, "双击");
             });
         });
     }
 
     pub fn show_click_amount(&mut self, ui: &mut egui::Ui, click_amount: u64) {
         ui.horizontal_wrapped(|ui| {
-            ui.label("Click Amount (0 = forever)");
+            ui.label("点击次数 (0 = 无限循环)");
             ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
                 self.disable_if_busy(ui);
                 ui.add(
@@ -66,7 +66,7 @@ impl RustyAutoClickerApp {
                 );
                 if self.is_autoclicking() && click_amount > 0u64 {
                     let remaining_clicks = click_amount.saturating_sub(self.click_counter);
-                    let remaining_text = format!("Remaining {remaining_clicks:?}");
+                    let remaining_text = format!("剩余 {remaining_clicks:?}");
                     ui.label(remaining_text);
                 }
             });
@@ -75,10 +75,10 @@ impl RustyAutoClickerApp {
 
     pub fn show_click_position(&mut self, ui: &mut egui::Ui, ctx: &Context) {
         ui.horizontal_wrapped(|ui| {
-            ui.label("Click Position");
+            ui.label("点击位置");
             self.disable_if_busy(ui);
             if ui
-                .add_sized([80.0f32, 16.0f32], egui::widgets::Button::new("Set Coords"))
+                .add_sized([80.0f32, 16.0f32], egui::widgets::Button::new("设置坐标"))
                 .clicked()
             {
                 Self::enter_coordinate_setting(self, ctx);
@@ -99,14 +99,14 @@ impl RustyAutoClickerApp {
                 ui.label("X");
 
                 if ui
-                    .selectable_value(&mut self.click_position, ClickPosition::Coord, "Coords")
+                    .selectable_value(&mut self.click_position, ClickPosition::Coord, "固定坐标")
                     .clicked()
                 {
                     self.key_pressed_set_coord = true;
                 };
                 ui.separator();
                 if ui
-                    .selectable_value(&mut self.click_position, ClickPosition::Mouse, "Mouse")
+                    .selectable_value(&mut self.click_position, ClickPosition::Mouse, "跟随鼠标")
                     .clicked()
                 {
                     self.key_pressed_set_coord = false;
